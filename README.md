@@ -25,7 +25,7 @@ To start the development server with auto-reloading:
 ```bash
 .\.venv\Scripts\activate # On Windows
 # source .venv/bin/activate # On Linux/macOS
-uvicorn main:app --reload --app-dir .
+uv run python -m uvicorn main:app --reload
 ```
 
 The server will run at `http://127.0.0.1:8000/`.
@@ -67,10 +67,7 @@ This is the main JSON-RPC endpoint for `add` and `multiply` methods.
 curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1}' http://127.0.0.1:8000/
 
 # Using Invoke-RestMethod (PowerShell)
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/" \
-    -Method Post \
-    -Headers @{ "Content-Type" = "application/json" } \
-    -Body '{"jsonrpc":"2.0","method":"add","params":[2,3],"id":1}'
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/"   -Method Post -Headers @{ "Content-Type" = "application/json" }   -Body '{"jsonrpc":"2.0","method":"add","params":[2,3],"id":1}'
 ```
 
 **Response (Example):**
@@ -88,10 +85,7 @@ Invoke-RestMethod -Uri "http://127.0.0.1:8000/" \
 curl -X POST -H "Content-Type: application/json" -d '{"jsonrpc": "2.0", "method": "multiply", "params": [4, 5], "id": 1}' http://127.0.0.1:8000/
 
 # Using Invoke-RestMethod (PowerShell)
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/" \
-    -Method Post \
-    -Headers @{ "Content-Type" = "application/json" } \
-    -Body '{"jsonrpc":"2.0","method":"multiply","params":[4,5],"id":1}'
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/"  -Method Post -Headers @{ "Content-Type" = "application/json" }  -Body '{"jsonrpc":"2.0","method":"multiply","params":[4,5],"id":1}'
 ```
 
 **Response (Example):**
@@ -105,10 +99,7 @@ Invoke-RestMethod -Uri "http://127.0.0.1:8000/" \
 curl -X POST -H "Content-Type: application/json" -d '[{"jsonrpc": "2.0", "method": "add", "params": [2, 3], "id": 1},{"jsonrpc": "2.0", "method": "multiply", "params": [2, 30], "id": 2}]' http://127.0.0.1:8000/
 
 
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/" `
--Method Post `
--Headers @{ "Content-Type" = "application/json" } `
--Body '[{"jsonrpc":"2.0","method":"add","params":[2,3],"id":1},{"jsonrpc":"2.0","method":"multiply","params":[2,30],"id":2}]'
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/" -Method Post -Headers @{ "Content-Type" = "application/json" }  -Body '[{"jsonrpc":"2.0","method":"add","params":[2,3],"id":1},{"jsonrpc":"2.0","method":"multiply","params":[2,30],"id":2}]'
 ```
 
 ## Install fastmcp
@@ -118,12 +109,12 @@ uv add fastmcp
 
 ## Run MCP inspector 
 ```bash 
-uv run fastmcp dev TestMPCserver.py
+uv run fastmcp dev inspector TestMPCserver.py 
 ```
 
 ## Run MCP server 
 ```bash 
-uv run fastmcp run  TestMPCserver.py
+uv run fastmcp run TestMPCserver.py
 ```
 
 
@@ -143,7 +134,7 @@ uv run fastmcp install claude-desktop DataprovidersMCPServer.py
 ```
 
 ```bash
-uv add langchain langchain-openai langchain-mcp-adapters python-dotenv streamlit logging
+uv add langchain langchain-openai langchain-mcp-adapters python-dotenv streamlit logging pandas fastmcp python-dotenv jsonrpcserver uvicorn streamlit langchain-ollama fastapi
 ```
 
 ```bashe

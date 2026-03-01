@@ -8,11 +8,7 @@ from jsonrpcserver import method, Result, Success, dispatch
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# print(f"Current Working Directory: {os.getcwd()}")
-# print(f"Python System Path: {sys.path}")
-
 app = FastAPI()
-#print(f"FastAPI app instance created: {id(app)} - Routes: {app.routes}")
 
 @method
 def add(a: int, b: int) -> Result:
