@@ -146,6 +146,36 @@ uv add langchain langchain-openai langchain-mcp-adapters python-dotenv streamlit
  uvicorn Streamable:app
 ```
 
+## Streaming HTTP Demo
+
+This project includes a streaming HTTP endpoint demonstration using FastAPI's `StreamingResponse`.
+
+### Start the Stream Server
+
+```bash
+uv run uvicorn Streamable:app --reload
+```
+
+The server will run at `http://127.0.0.1:8000/stream` and sends 10 chunks with 1-second intervals.
+
+### Run the Stream Client
+
+```bash
+python StreamableClient.py
+```
+
+The client demonstrates both async and synchronous methods to consume the streaming response.
+
+### Test with curl
+
+```bash
+# Using curl (Linux/macOS/Git Bash)
+curl http://127.0.0.1:8000/stream
+
+# Using Invoke-RestMethod (PowerShell)
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/stream" -Method Get
+```
+
 ## VS Code Debugging
 
 A `launch.json` file is provided in the `.vscode` directory to enable debugging with VS Code. You can set breakpoints in `main.py` and run the "Python: FastAPI" configuration.

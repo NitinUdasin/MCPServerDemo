@@ -5,7 +5,7 @@ import time
 app = FastAPI()
 
 def generate_stream():
-    for i in range(100):
+    for i in range(10):
         yield f"Chunk {i}\n"
         time.sleep(1)
 
