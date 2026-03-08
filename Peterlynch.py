@@ -38,7 +38,7 @@ MCP_CONFIG = {
             "run",
             "fastmcp",
             "run",
-            "C:\\WorkSpace\\POC\\JSON RPC\\DataprovidersMCPServer.py"
+            "C:\\WorkSpace\\POC\\MCPServerDemo\\DataprovidersMCPServer.py"
        ]
     }
     }

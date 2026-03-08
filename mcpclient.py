@@ -4,26 +4,27 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import ToolMessage
 import json
+import sys
 
 load_dotenv()
 
 async def main():
-    SERVERS = { 
-    "Financial Data Provider": {
-        "transport": "stdio",
-        "command": "C:\\Users\\nitin\\.local\\bin\\uv.exe",
-        "args": [
-            "run",
-            "fastmcp",
-            "run",
-            "C:\\WorkSpace\\POC\\JSON RPC\\DataprovidersMCPServer.py"
-       ]
+    connections = {
+        "Financial Data Provider": {
+            "transport": "stdio",
+            "command": "C:\\Users\\nitin\\.local\\bin\\uv.exe",
+            "args": [
+                "run",
+                "fastmcp",
+                "run",
+                "C:\\WorkSpace\\POC\\MCPServerDemo\\DataprovidersMCPServer.py"
+            ]
+        }
     }
-    }
-    client = MultiServerMCPClient(SERVERS)
+    
+    client = MultiServerMCPClient(connections)
     tools = await client.get_tools()
-    print(tools)
-
+    print(f"Available tools: {tools}")
 
     llm = ChatOpenAI(model="gpt-4")
     llm_with_tools = llm.bind_tools(tools)
@@ -38,7 +39,7 @@ async def main():
     if not getattr(response, "tool_calls", None):
         print("\nLLM Reply:", response.content)
         return
-    
+
     tool_messages = []
     for tc in response.tool_calls:
         selected_tool = tc["name"]
@@ -47,7 +48,7 @@ async def main():
 
         result = await named_tools[selected_tool].ainvoke(selected_tool_args)
         tool_messages.append(ToolMessage(tool_call_id=selected_tool_id, content=json.dumps(result)))
-        
+
 
     final_response = await llm_with_tools.ainvoke([prompt, response, *tool_messages])
     print(f"Final response: {final_response.content}")
